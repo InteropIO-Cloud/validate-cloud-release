@@ -1,0 +1,24 @@
+name: "validate-cloud-release"
+description: "Perform a series of validation check to make sure that a deployment is possible and valid."
+inputs:
+  tag-name:
+    description: "The name of the tag associated with the release"
+    required: true
+  action-name:
+    description: "The name of the release action"
+    required: true
+  changes:
+    description: "The changes of the release"
+    required: true
+  token:
+    description: "The GitHub token to use to perform API calls"
+    required: true
+  repo-name:
+    description: "The name of the repository"
+    required: true
+  repo-owner:
+    description: "The name of the owner of the repository"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"

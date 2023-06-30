@@ -1,0 +1,24 @@
+{
+  "name": "validate-cloud-release",
+  "version": "1.0.0",
+  "description": "validate release   -> if action is released, but the release is not latest -> exit 1 with reason \"will not deploy a replease, which is not marked as latest\"   -> if action is edited, but changes is not marking this as latest ->    exit 1 with reason \"will not deploy, because the release change does not mark this as latest\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flashd2n/validate-cloud-release.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flashd2n/validate-cloud-release/issues"
+  },
+  "homepage": "https://github.com/flashd2n/validate-cloud-release#readme",
+  "dependencies": {
+    "octokit": "^2.1.0"
+  }
+}
