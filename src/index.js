@@ -52,6 +52,10 @@ const run = async () => {
     if (actionName === "released") {
         return await validateReleased({ token, repoName, tagName, owner });
     }
+
+    console.warn(`This action is not recognized: ${actionName}, aborting the deployment.`);
+
+    process.exit(1);
 };
 
 run().then(() => console.log("Validation completed successfully."));

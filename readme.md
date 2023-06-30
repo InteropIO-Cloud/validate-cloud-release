@@ -5,7 +5,7 @@ This action is designed to be used in the io.Cloud CD pipeline to validate if a 
 Usage:
 ```yaml
 - name: Validate Release
-  uses: interopio-cloud/validate-cloud-release@v1
+  uses: interopio-cloud/validate-cloud-release@v1.0.1
     with:
       tag-name: ${{ github.event.release.tag_name }}
       action-name: ${{ github.event.action }}
