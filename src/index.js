@@ -1,14 +1,15 @@
 import { Octokit } from "octokit";
+import * as core from "@actions/core"
 
 const validateEdited = (parsedChanges) => {
     if (parsedChanges?.make_latest?.to) {
-        console.log("This is recognized as release changed to latest, proceeding with the deployment.");
+        core.notice("This is recognized as release changed to latest, proceeding with the deployment.");
         return;
     }
 
-    console.warn("This is not recognized as release changed to latest, aborting the deployment.");
+    core.warning("This is not recognized as release changed to latest, aborting the deployment.");
 
-    process.exit(1);
+    process.exit(core.ExitCode.Failure);
 };
 
 const validateReleased = async ({ token, repoName, tagName, owner }) => {
@@ -16,7 +17,7 @@ const validateReleased = async ({ token, repoName, tagName, owner }) => {
         auth: token,
     });
 
-    console.log(`Getting the latest release for ${owner}/${repoName}...`);
+    core.notice(`Getting the latest release for ${owner}/${repoName}...`);
 
     const latestResponse = await octokit.rest.repos.getLatestRelease({
         owner: owner,
@@ -26,22 +27,22 @@ const validateReleased = async ({ token, repoName, tagName, owner }) => {
     const latestReleaseTagName = latestResponse.data.tag_name;
 
     if (latestReleaseTagName !== tagName) {
-        console.warn(`This release was not marked as latest, aborting the deployment.`);
+        core.warning(`This release was not marked as latest, aborting the deployment.`);
 
-        process.exit(1);
+        process.exit(core.ExitCode.Failure);
     }
 
-    console.log(`This release was marked as latest, proceeding with the deployment.`);
+    core.notice(`This release was marked as latest, proceeding with the deployment.`);
 };
 
 const run = async () => {
 
-    const tagName = process.env["INPUT_TAG-NAME"];
-    const actionName = process.env["INPUT_ACTION-NAME"];
-    const changes = process.env["INPUT_CHANGES"];
-    const token = process.env["INPUT_TOKEN"];
-    const repoName = process.env["INPUT_REPO-NAME"];
-    const owner = process.env["INPUT_REPO-OWNER"];
+    const tagName = core.getInput("tag-name", { required: true });
+    const actionName = core.getInput("action-name", { required: true });
+    const changes = core.getInput("changes", { required: true });
+    const token = core.getInput("token", { required: true });
+    const repoName = core.getInput("repo-name", { required: true });
+    const owner = core.getInput("repo-owner", { required: true });
 
     const parsedChanges = changes ? JSON.parse(changes) : null;
 
@@ -53,9 +54,9 @@ const run = async () => {
         return await validateReleased({ token, repoName, tagName, owner });
     }
 
-    console.warn(`This action is not recognized: ${actionName}, aborting the deployment.`);
-
-    process.exit(1);
+    core.warning(`This action is not recognized: ${actionName}, aborting the deployment.`);
+    
+    process.exit(core.ExitCode.Failure);
 };
 
-run().then(() => console.log("Validation completed successfully."));
+run().then(() => core.notice("Validation completed successfully."));
