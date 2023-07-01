@@ -1,4 +1,4 @@
-name: Deploy Project
+name: Deploy Github Action
 on:
   workflow_dispatch:
     inputs:
@@ -37,6 +37,8 @@ jobs:
             push: true
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/validate-cloud-release:${{ github.event.inputs.version }}
     make-release:
+      permissions:
+        contents: write
       runs-on: ubuntu-latest
       needs: build
       steps:
