@@ -9,7 +9,7 @@ const run = async () => {
 
     const octokit = github.getOctokit(myToken);
 
-    await octokit.rest.repos.createRelease({ owner, repo, tagName, make_latest: true, name: tagName, draft: false, prerelease: false });
+    await octokit.rest.repos.createRelease({ owner, repo, tag_name: tagName, name: tagName, draft: false, prerelease: false });
 
     core.notice(`Release ${tagName} created`);
 };
