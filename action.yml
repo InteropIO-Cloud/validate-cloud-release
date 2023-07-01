@@ -21,4 +21,4 @@ inputs:
     required: true
 runs:
   using: "docker"
-  image: "ioconnect/validate-cloud-release:1.1.0"
+  image: "docker://ioconnect/validate-cloud-release:1.1.1"
