@@ -1,7 +1,7 @@
 import { readFileSync } from "fs"
 import { join } from "path"
 import { parse } from "yaml"
-const core = require('@actions/core');
+import * as core from "@actions/core"
 
 const run = async () => {
     const tagName = core.getInput("tag-name", { required: true });
